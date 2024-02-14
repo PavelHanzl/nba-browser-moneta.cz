@@ -15,6 +15,7 @@ fun PlayerDetailScreen(
 ) {
     Column {
         Text(text = viewModel.nameOfScreen)
+        Text(text = viewModel.playerLastName)
         ScreenNav(navController = navController)
     }
 

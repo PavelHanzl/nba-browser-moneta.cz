@@ -9,6 +9,8 @@ import cz.pavelhanzl.nbabrowser.data.team.TeamRepositoryImpl
 import cz.pavelhanzl.nbabrowser.features.playerdetail.presentation.PlayerDetailViewModel
 import cz.pavelhanzl.nbabrowser.features.playersearch.presentation.PlayerSearchViewModel
 import cz.pavelhanzl.nbabrowser.features.teamdetail.presentation.TeamDetailViewModel
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -16,14 +18,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
 
+    // Creating an Interceptor to add an authorization header for https://docs.balldontlie.io/#authentication
+    val authorizationInterceptor = Interceptor { chain ->
+        val newRequest = chain.request().newBuilder()
+            .addHeader("Authorization", "6916e92a-5225-4770-92af-6f931edd6b51")
+            .build()
+        chain.proceed(newRequest)
+    }
+
+    // Creating an OkHttp client instance with interceptor
+    single {
+        OkHttpClient.Builder()
+            .addInterceptor(authorizationInterceptor)
+            .build()
+    }
+
+
     //Api instance
     single {
         Retrofit.Builder()
             .baseUrl("https://www.balldontlie.io/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(get()) // Getting the OkHttp client instance
             .build()
     }
-
 
 
     //Data

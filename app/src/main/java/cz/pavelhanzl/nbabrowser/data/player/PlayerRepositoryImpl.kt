@@ -9,8 +9,16 @@ class PlayerRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun searchPlayerById(playerId: String): Player {
-        TODO("Not yet implemented")
+    override suspend fun searchPlayerById(playerId: String): Player? {
+        val response = dataSource.findPlayerById(playerId)
+
+        if(response.isSuccessful && response.body() != null){
+            return response.body()!!
+        } else {
+            return null
+        }
+
+
     }
 
 }
