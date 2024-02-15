@@ -13,9 +13,12 @@ fun PlayerDetailScreen(
     playerId: String?,
     viewModel: PlayerDetailViewModel = koinViewModel()
 ) {
+
+
     Column {
         Text(text = viewModel.nameOfScreen)
-        Text(text = viewModel.playerLastName)
+        Text(text = viewModel.state.id.toString())
+        Text(text = viewModel.state.lastName!!)
         ScreenNav(navController = navController)
     }
 

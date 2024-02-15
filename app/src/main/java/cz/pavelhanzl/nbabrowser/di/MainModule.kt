@@ -1,5 +1,6 @@
 package cz.pavelhanzl.nbabrowser.di
 
+import androidx.lifecycle.SavedStateHandle
 import cz.pavelhanzl.nbabrowser.data.player.PlayerApiService
 import cz.pavelhanzl.nbabrowser.data.player.PlayerRepository
 import cz.pavelhanzl.nbabrowser.data.player.PlayerRepositoryImpl
@@ -37,7 +38,7 @@ val appModule = module {
     //Api instance
     single {
         Retrofit.Builder()
-            .baseUrl("https://www.balldontlie.io/api/v1/")
+            .baseUrl("https://api.balldontlie.io/v1//")
             .addConverterFactory(GsonConverterFactory.create())
             .client(get()) // Getting the OkHttp client instance
             .build()
@@ -47,7 +48,6 @@ val appModule = module {
     //Data
     factory { get<Retrofit>().create(PlayerApiService::class.java) }
     factory { get<Retrofit>().create(TeamApiService::class.java) }
-
 
 
     //Domain
@@ -71,8 +71,9 @@ val appModule = module {
         )
     }
 
-    viewModel {
+    viewModel { (savedStateHandle: SavedStateHandle) ->
         PlayerDetailViewModel(
+            savedStateHandle = savedStateHandle,
             playerRepository = get()
         )
     }
@@ -82,7 +83,6 @@ val appModule = module {
             teamRepository = get()
         )
     }
-
 
 
 }
