@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import cz.pavelhanzl.nbabrowser.features.playersearch.presentation.ScreenNav
 import cz.pavelhanzl.nbabrowser.navigation.NavigationStrings
 import org.koin.androidx.compose.koinViewModel
 
@@ -39,7 +38,6 @@ fun TeamDetailScreen(
                         Text(text = "zpět")
 
                     }
-                    ScreenNav(navController = navController)
                 }
             }
         } else {
