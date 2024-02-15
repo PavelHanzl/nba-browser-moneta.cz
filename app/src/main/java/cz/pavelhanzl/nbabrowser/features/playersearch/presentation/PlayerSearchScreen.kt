@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,14 +22,20 @@ import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -45,23 +52,60 @@ import cz.pavelhanzl.nbabrowser.R
 import cz.pavelhanzl.nbabrowser.features.playerdetail.model.Player
 import cz.pavelhanzl.nbabrowser.navigation.NavigationStrings
 import cz.pavelhanzl.nbabrowser.temp.images.PlayerPhoto
+import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
+import cz.pavelhanzl.nbabrowser.utils.ktx.toFeetAndInches
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun PlayerSearchScreen(
     navController: NavController,
     viewModel: PlayerSearchViewModel = koinViewModel()
 ) {
+    val state = viewModel.state
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(title = { Text(text = viewModel.nameOfScreen) })
+            TopAppBar(
+                title = {
+
+                    Row {
+                        // Ball icon
+                        GlideImage(
+                            modifier = Modifier
+                                .size(30.dp)
+                                .align(Alignment.CenterVertically),
+                            model = R.drawable.icon_basketball_ball,
+                            contentDescription = "Ball icon",
+                            contentScale = ContentScale.Fit,
+                            transition = CrossFade
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .padding(
+                                    start = 8.dp
+                                )
+                                .align(Alignment.CenterVertically),
+                            text = "NBA Players",
+                            fontWeight = FontWeight.ExtraBold
+
+                        )
+                    }
+
+                },
+                scrollBehavior = scrollBehavior
+            )
         }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Spacer(modifier = Modifier.height(10.dp))
-            PlayerList(viewModel = viewModel, navController = navController)
+        if (state.items.isNotEmpty()) {
+            Column(modifier = Modifier.padding(it)) {
+                Spacer(modifier = Modifier.height(10.dp))
+                PlayerList(viewModel = viewModel, navController = navController, state = state)
+            }
         }
     }
 }
@@ -70,9 +114,10 @@ fun PlayerSearchScreen(
 fun PlayerList(
     modifier: Modifier = Modifier,
     viewModel: PlayerSearchViewModel,
-    navController: NavController
+    navController: NavController,
+    state: PlayerSearchScreenState
 ) {
-    val state = viewModel.state
+
 
     LazyColumn(
         modifier = modifier,
@@ -85,7 +130,7 @@ fun PlayerList(
                     navController.navigate("${NavigationStrings.PLAYERDETAIL}/${state.items[i].id}")
                 })
 
-            //loads next page of books
+            //loads next page of players
             if (i >= state.items.size - 1 && !state.endReached && !state.isLoading) {
                 viewModel.loadNextPlayers()
             }
@@ -120,7 +165,7 @@ fun PlayerItem(
             .fillMaxWidth()
             .padding(8.dp),
         colors = CardDefaults.cardColors(
-
+            containerColor = Color.White
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -133,64 +178,151 @@ fun PlayerItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // temporary solution - will be replaced by real images from real api
-            val randomPlayerImage = PlayerPhoto.entries.toTypedArray().random().url
 
-            // Player image preview
-            GlideImage(
+            Box(
                 modifier = Modifier
                     .size(100.dp)
-                    .border(3.dp, Color.LightGray, CircleShape)
-                    .clip(CircleShape),
-                model = randomPlayerImage,
-                contentDescription = "Photo of player",
-                contentScale = ContentScale.FillHeight,
-                loading = placeholder(R.drawable.ic_launcher_background),
-                failure = placeholder(R.drawable.ic_launcher_foreground),
-                transition = CrossFade
-            )
+            ) {
+
+                // temporary solution - will be replaced by real images from real api
+                val randomPlayerImage = remember{ PlayerPhoto.entries.toTypedArray().random().url}
+
+                // Player image preview
+                GlideImage(
+                    modifier = Modifier
+                        .size(90.dp)
+                        //.border(3.dp, Color.LightGray, CircleShape)
+                        .clip(CircleShape)
+                        .align(Alignment.Center),
+                    model = randomPlayerImage,
+                    contentDescription = "Photo of player",
+                    contentScale = ContentScale.FillHeight,
+                    loading = placeholder(R.drawable.loading_placeholder),
+                    failure = placeholder(R.drawable.failure_placeholder),
+                    transition = CrossFade
+                )
+
+                // temporary solution - will be replaced by real images from real api
+                val randomTeamLogo = remember { TeamLogo.entries.toTypedArray().random().url }
+
+                // Player team logo
+                GlideImage(
+                    modifier = Modifier
+                        .size(45.dp)
+                        .align(Alignment.BottomEnd) // zarovná logo vpravo dole
+                        .padding(4.dp),
+                    model = randomTeamLogo,
+                    contentDescription = "Team logo of player",
+                    contentScale = ContentScale.Fit,
+                    loading = placeholder(R.drawable.general_loader_placeholder),
+                    failure = placeholder(R.drawable.transparent_placeholder),
+                    transition = CrossFade
+                )
+
+            }
+
             Column(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
             ) {
 
-                // Player id
-                Text(
-                    text = player.id.toString(),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
+
+                Row {
+
+                    // Player id
+                    Text(
+                        text = "${player.id.toString()} |" ?: "",
+                        color = Color.LightGray,
+                        fontWeight = FontWeight.Black,
+                        fontSize = 18.sp
+                    )
+                    // Player name
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 6.dp),
+                        text = "${player.first_name ?: ""} ${player.last_name ?: ""} " ?: "",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
 
 
-                // Player name
-                Text(
-                    text = "${player.first_name} ${player.last_name} ",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
+                }
 
-                // Position
-                Text(
-                    text = player.position,
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
 
-                // Position
-                Text(
-                    text = player.height,
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
+                Row {
 
-                // Team full name
-                Text(
-                    text = player.team.full_name,
-                    fontSize = 14.sp,
-                    overflow = TextOverflow.Ellipsis,
-                    fontStyle = FontStyle.Italic
+                    // Court icon
+                    GlideImage(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterVertically),
+                        model = R.drawable.icon_court,
+                        contentDescription = "Court icon",
+                        contentScale = ContentScale.Fit,
+                        transition = CrossFade
+                    )
 
-                )
+                    // Position
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 8.dp),
+                        text = player.position ?: "",
+                        fontSize = 14.sp,
+                        color = Color.Gray
+                    )
+
+                    // Height icon
+                    GlideImage(
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .size(20.dp)
+                            .align(Alignment.CenterVertically),
+                        model = R.drawable.icon_measurment,
+                        contentDescription = "Court icon",
+                        contentScale = ContentScale.Fit,
+                        transition = CrossFade
+                    )
+
+                    // Height
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 6.dp),
+                        text = player.height.toFeetAndInches() ?: "",
+                        fontSize = 14.sp,
+                        color = Color.Gray
+                    )
+
+                }
+
+                Row {
+
+                    // Team icon
+                    GlideImage(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .align(Alignment.CenterVertically),
+                        model = R.drawable.icon_team,
+                        contentDescription = "Team icon",
+                        contentScale = ContentScale.Fit,
+                        transition = CrossFade
+                    )
+
+                    // Team full name
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 8.dp),
+                        text = player.team.full_name ?: "",
+                        fontSize = 16.sp,
+                        overflow = TextOverflow.Ellipsis,
+                        fontStyle = FontStyle.Italic,
+                        maxLines = 1,
+
+                    )
+                }
+
 
             }
         }
