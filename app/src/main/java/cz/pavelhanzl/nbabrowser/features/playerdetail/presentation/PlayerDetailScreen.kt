@@ -20,11 +20,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun PlayerDetailScreen(
     navController: NavController,
-    playerId: String?,
     viewModel: PlayerDetailViewModel = koinViewModel()
 ) {
 
-    val state = viewModel.state
     val player = viewModel.state.player
 
     Scaffold() {

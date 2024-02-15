@@ -33,12 +33,9 @@ fun AppNavHost(
                 type = NavType.IntType
             })
         ) {
-                backStackEntry ->
-            val playerId = backStackEntry.arguments?.getString("playerId")
 
             PlayerDetailScreen(
-                navController,
-                playerId
+                navController
             )
         }
 
@@ -46,15 +43,12 @@ fun AppNavHost(
         composable(
             "${NavigationStrings.TEAMDETAIL}/{teamId}",
             arguments = listOf(navArgument("teamId"){
-                type = NavType.StringType
+                type = NavType.IntType
             })
         ) {
-                backStackEntry ->
-            val teamId = backStackEntry.arguments?.getString("teamId")
 
             TeamDetailScreen(
-                navController,
-                teamId
+                navController
             )
         }
 

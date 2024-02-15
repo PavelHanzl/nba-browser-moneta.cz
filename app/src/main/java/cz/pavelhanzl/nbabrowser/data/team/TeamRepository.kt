@@ -5,6 +5,6 @@ import cz.pavelhanzl.nbabrowser.features.teamdetail.model.Team
 
 interface TeamRepository {
 
-    suspend fun searchTeamById(teamId: String) : Team
+    suspend fun getTeamById(teamId: Int) : Team?
 
 }

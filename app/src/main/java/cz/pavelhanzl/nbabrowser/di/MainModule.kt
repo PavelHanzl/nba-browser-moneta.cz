@@ -80,8 +80,9 @@ val appModule = module {
         )
     }
 
-    viewModel {
+    viewModel {(savedStateHandle: SavedStateHandle) ->
         TeamDetailViewModel(
+            savedStateHandle = savedStateHandle,
             teamRepository = get()
         )
     }
