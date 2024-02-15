@@ -1,6 +1,6 @@
 package cz.pavelhanzl.nbabrowser.features.teamdetail.model
 
-class Team (
+data class Team (
     val id: Int,
     val conference: String,
     val division: String,

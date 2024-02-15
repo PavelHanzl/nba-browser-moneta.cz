@@ -30,7 +30,7 @@ fun AppNavHost(
         composable(
             "${NavigationStrings.PLAYERDETAIL}/{playerId}",
             arguments = listOf(navArgument("playerId"){
-                type = NavType.StringType
+                type = NavType.IntType
             })
         ) {
                 backStackEntry ->

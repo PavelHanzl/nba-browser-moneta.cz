@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.pavelhanzl.nbabrowser.data.player.PlayerRepository
+import cz.pavelhanzl.nbabrowser.features.playerdetail.model.Player
 import cz.pavelhanzl.nbabrowser.features.teamdetail.model.Team
 import kotlinx.coroutines.launch
 import java.text.FieldPosition
@@ -22,29 +23,23 @@ class PlayerDetailViewModel(
     init {
 
         //on init loads player details using player id in saved state
-        val playerId: String? = savedStateHandle["playerId"]
+        val playerId: Int? = savedStateHandle["playerId"]
         loadPlayerDetail(playerId!!) //cannot be null, because id is from search screen where the player was loaded from
 
     }
 
-    private fun loadPlayerDetail(playerId: String) {
+    private fun loadPlayerDetail(playerId: Int) {
         viewModelScope.launch {
+
             state = state.copy(
-                id =playerId.toInt(),
-               // lastName = playerRepository.getPlayerById(playerId).last_name
+                player = playerRepository.getPlayerById(playerId)
             )
+
         }
     }
 
 }
 
 data class PlayerDetailScreenState(
-    val id: Int = 0,
-    val firstName: String = "",
-    val lastName: String = "",
-    val position: String = "",
-    val height: String = "",
-    val country: String = "",
-    val team: Team? = null,
-
+    val player: Player? = null
     )

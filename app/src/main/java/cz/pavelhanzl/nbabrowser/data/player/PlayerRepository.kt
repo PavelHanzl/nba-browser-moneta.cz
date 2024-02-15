@@ -9,5 +9,5 @@ interface PlayerRepository {
     suspend fun getAllPlayersByPage(nextCursor: Int, perPage:Int):Result<List<Player>>
 
 
-    suspend fun getPlayerById(playerId: String) : Player?
+    suspend fun getPlayerById(playerId: Int) : Player?
 }

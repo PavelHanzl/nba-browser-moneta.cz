@@ -86,5 +86,8 @@ dependencies {
     //Glide for images
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
 
+    //loging
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
 
 }

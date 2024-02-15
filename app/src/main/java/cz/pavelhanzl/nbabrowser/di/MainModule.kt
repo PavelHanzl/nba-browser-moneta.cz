@@ -12,6 +12,7 @@ import cz.pavelhanzl.nbabrowser.features.playersearch.presentation.PlayerSearchV
 import cz.pavelhanzl.nbabrowser.features.teamdetail.presentation.TeamDetailViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -31,6 +32,7 @@ val appModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(authorizationInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
@@ -38,7 +40,7 @@ val appModule = module {
     //Api instance
     single {
         Retrofit.Builder()
-            .baseUrl("https://api.balldontlie.io/v1//")
+            .baseUrl("https://api.balldontlie.io/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(get()) // Getting the OkHttp client instance
             .build()

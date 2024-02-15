@@ -18,11 +18,6 @@ class PlayerSearchViewModel(
 
     val nameOfScreen = "Player Search"
 
-    init {
-        //loadNextPlayers()
-    }
-
-
     private val paginator = PaginatorImpl(
         initialCursor = state.nextCursor,
         maxResultsPerPage = state.perPage,
@@ -49,6 +44,9 @@ class PlayerSearchViewModel(
         }
     )
 
+    init {
+        loadNextPlayers()
+    }
 
     fun loadNextPlayers() {
         viewModelScope.launch {

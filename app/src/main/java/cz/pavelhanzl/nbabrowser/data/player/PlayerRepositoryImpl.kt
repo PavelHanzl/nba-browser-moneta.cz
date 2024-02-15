@@ -19,12 +19,14 @@ class PlayerRepositoryImpl(
         }
     }
 
-    override suspend fun getPlayerById(playerId: String): Player? {
+    override suspend fun getPlayerById(playerId: Int): Player? {
 
-        val response = dataSource.getPlayerById(playerId)
+        val response = dataSource.getPlayerById(
+            playerId=playerId
+        )
 
         return if(response.isSuccessful && response.body() != null){
-            response.body()!!
+            response.body()!!.data
         } else {
             null
         }
