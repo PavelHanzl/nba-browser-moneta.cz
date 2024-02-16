@@ -23,8 +23,12 @@ Pro získání informací o hráčích je vhodné použít https://balldontlie.i
 - **Seznam všech NBA Hráčů**: Seznam všech NBA hráčů získaných z API.
 - **Detaily Hráčů**: Zobrazuje podrobné informace o hráčích, včetně fotografií a doplňujících informací.
 - **Detaily Týmů**: Informace o NBA týmech s logy a dalšími doplňujícími údaji.
+<div>  
+<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_1.jpg" align="left" height="500">
+<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_2.jpg" align="left" height="500">
+<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_3.jpg" align="left" height="500">
+</div>
 
-![Název obrázku](https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_1.jpg){height=500px}
 
 ## Technologie
 - **Kotlin & Jetpack Compose**: Pro moderní a efektivní vývoj UI.
