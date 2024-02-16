@@ -45,7 +45,7 @@ import com.bumptech.glide.integration.compose.placeholder
 import cz.pavelhanzl.nbabrowser.R
 import cz.pavelhanzl.nbabrowser.features.playerdetail.model.Player
 import cz.pavelhanzl.nbabrowser.navigation.NavigationStrings
-import cz.pavelhanzl.nbabrowser.temp.images.PlayerPhoto
+import cz.pavelhanzl.nbabrowser.temp.images.PlayerPhotoThumbnails
 import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
 import cz.pavelhanzl.nbabrowser.utils.ktx.toFeetAndInches
 import org.koin.androidx.compose.koinViewModel
@@ -57,7 +57,7 @@ fun PlayerSearchScreen(
 ) {
     val state = viewModel.state
     val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+        TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -94,7 +94,7 @@ fun NbaTopAppBar(
         navigationIcon = {
 
             IconButton(
-                onClick = {navController.navigateUp()},
+                onClick = { navController.navigateUp() },
                 enabled = backButtonEnabled()
             ) {
                 // Ball icon
@@ -187,7 +187,7 @@ fun PlayerItem(
             ) {
 
                 // temporary solution - will be replaced by real images from real api
-                val randomPlayerImage = remember { PlayerPhoto.entries.toTypedArray().random().url }
+                val randomPlayerImage = remember { PlayerPhotoThumbnails.entries.toTypedArray().random().url }
 
                 // Player image preview
                 GlideImage(
@@ -199,8 +199,8 @@ fun PlayerItem(
                     model = randomPlayerImage,
                     contentDescription = "Photo of player",
                     contentScale = ContentScale.FillHeight,
-                    loading = placeholder(R.drawable.loading_placeholder),
-                    failure = placeholder(R.drawable.failure_placeholder),
+                    loading = placeholder(R.drawable.player_loading_placeholder),
+                    failure = placeholder(R.drawable.player_failure_placeholder),
                     transition = CrossFade
                 )
 
@@ -217,7 +217,7 @@ fun PlayerItem(
                     contentDescription = "Team logo of player",
                     contentScale = ContentScale.Fit,
                     loading = placeholder(R.drawable.general_loader_placeholder),
-                    failure = placeholder(R.drawable.transparent_placeholder),
+                    failure = placeholder(R.drawable.icon_transparent_placeholder),
                     transition = CrossFade
                 )
 
