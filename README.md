@@ -25,8 +25,6 @@ Pro získání informací o hráčích je vhodné použít https://balldontlie.i
 - **Detaily Týmů**: Informace o NBA týmech s logy a dalšími doplňujícími údaji.
 
 ### Screenshoty z aplikace
-Obrázky se načítají náhodně z předem definovaného seznamu URL (hardcoded v enum třídě), proto nemusí vždy odpovídat textovým datům získaných z API - viz níže sekce omezení. Zde např. u obrazovky detailu teamu neodpovídá název teamu (Houston Rockets) zobrazenému logu (Chicago Bulls), jelikož logo bylo načteno náhodně a změní se při každém novém načtení obrazovky. Projekt je však připraven na implementaci reálného API, které bude poskytovat relevantní obrázky.
-
 <div >  
 <img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_1.jpg"  style="margin-right: 5px; border: 1px solid #adadad;" align="left" height="500">
 <img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_2.jpg"  style="margin-right: 5px; border: 1px solid #adadad;" align="left" height="500">
