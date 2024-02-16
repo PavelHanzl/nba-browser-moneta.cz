@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -55,9 +56,9 @@ fun PlayerDetailScreen(
 
     Scaffold(topBar = {
         NbaTopAppBar(navController = navController,
-            icon = { R.drawable.icon_back },
-            title = { "Player Detail" },
-            backButtonEnabled = { true })
+            icon = R.drawable.icon_back ,
+            title = R.string.player_detail_title
+        )
     }) {
 
         if (player != null) {
@@ -106,7 +107,7 @@ private fun PlayerDetailHeader(
                 .height(250.dp)
                 .align(Alignment.BottomCenter),
             model = randomPlayerImage,
-            contentDescription = "Photo of player",
+            contentDescription = stringResource(R.string.photo_of_player),
             contentScale = ContentScale.Fit,
             loading = placeholder(R.drawable.player_loading_transparent_placeholder),
             failure = placeholder(R.drawable.player_failure_transparent_placeholder),
@@ -125,7 +126,7 @@ private fun PlayerDetailHeader(
                 .padding(20.dp)
                 .clickable(onClick = { navController.navigate("${NavigationStrings.TEAMDETAIL.toString()}/${player.team.id}") }),
             model = randomTeamLogo,
-            contentDescription = "Team logo of player",
+            contentDescription = stringResource(R.string.team_logo_of_player),
             contentScale = ContentScale.Fit,
             loading = placeholder(R.drawable.general_loader_placeholder),
             failure = placeholder(R.drawable.icon_transparent_placeholder),
@@ -175,7 +176,7 @@ private fun PlayerDetailStats(player: Player) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_court,
-                contentDescription = "Court icon",
+                contentDescription = stringResource(R.string.court_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
@@ -200,7 +201,7 @@ private fun PlayerDetailStats(player: Player) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_measurment,
-                contentDescription = "Height icon",
+                contentDescription = stringResource(R.string.height_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
@@ -224,7 +225,7 @@ private fun PlayerDetailStats(player: Player) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_weight,
-                contentDescription = "Weight icon",
+                contentDescription = stringResource(R.string.weight_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
@@ -248,7 +249,7 @@ private fun PlayerDetailStats(player: Player) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_earth,
-                contentDescription = "Nationality icon",
+                contentDescription = stringResource(R.string.nationality_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
@@ -283,7 +284,7 @@ private fun PlayerDetailTeamInfo(navController: NavController, player: Player) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_team,
-                contentDescription = "Team icon",
+                contentDescription = stringResource(R.string.team_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
@@ -311,7 +312,7 @@ private fun PlayerDetailTeamInfo(navController: NavController, player: Player) {
                 onClick = { navController.navigate("${NavigationStrings.TEAMDETAIL.toString()}/${player.team.id}") },
                 shape = RectangleShape
             ) {
-                Text(text = "Detail of ${player.team.name} team")
+                Text(text = stringResource(R.string.detail_of_team, player.team.name))
 
             }
         }

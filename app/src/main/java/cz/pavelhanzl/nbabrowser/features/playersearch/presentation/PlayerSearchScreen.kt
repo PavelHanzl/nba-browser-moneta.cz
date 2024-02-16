@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,9 +66,9 @@ fun PlayerSearchScreen(
             NbaTopAppBar(
                 navController = navController,
                 scrollBehavior = scrollBehavior,
-                icon = { R.drawable.icon_basketball_ball },
-                title = { "NBA Players" },
-                backButtonEnabled = { false }
+                icon = R.drawable.icon_basketball_ball,
+                title = R.string.nba_players_title,
+                backButtonEnabled = false
             )
         }
     )
@@ -97,21 +98,21 @@ fun PlayerSearchScreen(
 fun NbaTopAppBar(
     navController: NavController,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
-    icon: () -> Int,
-    title: () -> String,
-    backButtonEnabled: () -> Boolean = { true }
+    icon: Int,
+    title: Int,
+    backButtonEnabled: Boolean = true
 ) {
     TopAppBar(
         navigationIcon = {
             IconButton(
                 onClick = { navController.navigateUp() },
-                enabled = backButtonEnabled()
+                enabled = backButtonEnabled
             ) {
                 // Ball icon
                 GlideImage(
                     modifier = Modifier.size(30.dp),
-                    model = icon(),
-                    contentDescription = "Ball icon",
+                    model = icon,
+                    contentDescription = stringResource(R.string.ball_icon),
                     contentScale = ContentScale.Fit,
                     transition = CrossFade
                 )
@@ -119,7 +120,7 @@ fun NbaTopAppBar(
         },
         title = {
             Text(
-                text = title(),
+                text = stringResource(title),
                 fontWeight = FontWeight.ExtraBold
             )
         },
@@ -216,7 +217,7 @@ fun PlayerItem(
                         .clip(CircleShape)
                         .align(Alignment.Center),
                     model = randomPlayerImage,
-                    contentDescription = "Photo of player",
+                    contentDescription = stringResource(R.string.photo_of_player),
                     contentScale = ContentScale.FillHeight,
                     loading = placeholder(R.drawable.player_loading_placeholder),
                     failure = placeholder(R.drawable.player_failure_placeholder),
@@ -233,7 +234,7 @@ fun PlayerItem(
                         .align(Alignment.BottomEnd) // zarovná logo vpravo dole
                         .padding(4.dp),
                     model = randomTeamLogo,
-                    contentDescription = "Team logo of player",
+                    contentDescription = stringResource(R.string.team_logo_of_player),
                     contentScale = ContentScale.Fit,
                     loading = placeholder(R.drawable.general_loader_placeholder),
                     failure = placeholder(R.drawable.icon_transparent_placeholder),
@@ -279,7 +280,7 @@ fun PlayerItem(
                                     .size(20.dp)
                                     .align(Alignment.CenterVertically),
                                 model = R.drawable.icon_court,
-                                contentDescription = "Court icon",
+                                contentDescription = stringResource(R.string.court_icon),
                                 contentScale = ContentScale.Fit,
                                 transition = CrossFade
                             )
@@ -303,7 +304,7 @@ fun PlayerItem(
                                     .size(20.dp)
                                     .align(Alignment.CenterVertically),
                                 model = R.drawable.icon_measurment,
-                                contentDescription = "Court icon",
+                                contentDescription = stringResource(R.string.height_icon),
                                 contentScale = ContentScale.Fit,
                                 transition = CrossFade
                             )
@@ -331,7 +332,7 @@ fun PlayerItem(
                                     .size(20.dp)
                                     .align(Alignment.CenterVertically),
                                 model = R.drawable.icon_team,
-                                contentDescription = "Team icon",
+                                contentDescription = stringResource(R.string.team_icon),
                                 contentScale = ContentScale.Fit,
                                 transition = CrossFade
                             )

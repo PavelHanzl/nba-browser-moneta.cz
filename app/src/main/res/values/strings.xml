@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">NBABrowser</string>
+    <string name="nba_players_title">NBA Players</string>
+    <string name="player_detail_title">Player Detail</string>
+    <string name="team_detail_title">Team Detail</string>
+    <string name="ball_icon">Ball icon</string>
+    <string name="photo_of_player">Photo of player</string>
+    <string name="team_logo_of_player">Team logo of player</string>
+    <string name="court_icon">Court icon</string>
+    <string name="height_icon">Height icon</string>
+    <string name="team_icon">Team icon</string>
+    <string name="weight_icon">Weight icon</string>
+    <string name="nationality_icon">Nationality icon</string>
+    <string name="detail_of_team">Detail of %1$s team</string>
+    <string name="logo_of_team">Logo of team</string>
+    <string name="city_icon">City icon</string>
+    <string name="division_icon">Division icon</string>
+    <string name="back_to_player_detail">Back to player detail</string>
 </resources>

@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,9 +53,8 @@ fun TeamDetailScreen(
         topBar = {
             NbaTopAppBar(
                 navController = navController,
-                icon = { R.drawable.icon_back },
-                title = { "Team Detail" },
-                backButtonEnabled = { true }
+                icon = R.drawable.icon_back,
+                title = R.string.team_detail_title
             )
         }
     ) {
@@ -80,7 +80,7 @@ fun TeamDetailScreen(
                         shape = RectangleShape
                     )
                     {
-                        Text(text = "Back to player detail")
+                        Text(text = stringResource(R.string.back_to_player_detail))
                     }
                 }
 
@@ -114,7 +114,7 @@ private fun TeamDetailHeader(
                 .height(200.dp)
                 .align(Alignment.Center),
             model = randomTeamImage,
-            contentDescription = "Photo of player",
+            contentDescription = stringResource(R.string.logo_of_team),
             contentScale = ContentScale.Fit,
             loading = placeholder(R.drawable.player_loading_transparent_placeholder),
             failure = placeholder(R.drawable.player_failure_transparent_placeholder),
@@ -162,7 +162,7 @@ private fun TeamDetailTeamInfo(team: Team) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_city,
-                contentDescription = "City icon",
+                contentDescription = stringResource(R.string.city_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
@@ -187,7 +187,7 @@ private fun TeamDetailTeamInfo(team: Team) {
                     .size(20.dp)
                     .align(Alignment.CenterVertically),
                 model = R.drawable.icon_compas,
-                contentDescription = "Division icon",
+                contentDescription = stringResource(R.string.division_icon),
                 contentScale = ContentScale.Fit,
                 transition = CrossFade
             )
