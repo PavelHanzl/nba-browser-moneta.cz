@@ -58,18 +58,34 @@ fun PlayerSearchScreen(
     val state = viewModel.state
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    Scaffold(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
-        NbaTopAppBar(navController = navController,
-            scrollBehavior = scrollBehavior,
-            icon = { R.drawable.icon_basketball_ball },
-            title = { "NBA Players" },
-            backButtonEnabled = { false })
-
-    }) {
+    Scaffold(modifier = Modifier
+        .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            NbaTopAppBar(
+                navController = navController,
+                scrollBehavior = scrollBehavior,
+                icon = { R.drawable.icon_basketball_ball },
+                title = { "NBA Players" },
+                backButtonEnabled = { false }
+            )
+        }
+    )
+    {
         if (state.items.isNotEmpty()) {
-            Column(modifier = Modifier.padding(it)) {
-                Spacer(modifier = Modifier.height(10.dp))
-                PlayerList(viewModel = viewModel, navController = navController, state = state)
+            Column(
+                modifier = Modifier
+                    .padding(it)
+            )
+            {
+                Spacer(
+                    modifier = Modifier
+                        .height(10.dp)
+                )
+                PlayerList(
+                    viewModel = viewModel,
+                    navController = navController,
+                    state = state
+                )
             }
         }
     }
@@ -85,11 +101,10 @@ fun NbaTopAppBar(
     backButtonEnabled: () -> Boolean = { true }
 ) {
     TopAppBar(
-
         navigationIcon = {
-
             IconButton(
-                onClick = { navController.navigateUp() }, enabled = backButtonEnabled()
+                onClick = { navController.navigateUp() },
+                enabled = backButtonEnabled()
             ) {
                 // Ball icon
                 GlideImage(
@@ -101,12 +116,13 @@ fun NbaTopAppBar(
                 )
             }
         },
-
         title = {
             Text(
-                text = title(), fontWeight = FontWeight.ExtraBold
+                text = title(),
+                fontWeight = FontWeight.ExtraBold
             )
-        }, scrollBehavior = scrollBehavior
+        },
+        scrollBehavior = scrollBehavior
     )
 }
 
@@ -125,9 +141,11 @@ fun PlayerList(
         verticalArrangement = Arrangement.Top
     ) {
         items(state.items.size) { i ->
-            PlayerItem(state.items[i], onClick = {
-                navController.navigate("${NavigationStrings.PLAYERDETAIL}/${state.items[i].id}")
-            })
+            PlayerItem(state.items[i],
+                onClick = {
+                    navController.navigate("${NavigationStrings.PLAYERDETAIL}/${state.items[i].id}")
+                }
+            )
 
             //loads next page of players
             if (i >= state.items.size - 1 && !state.endReached && !state.isLoading) {
@@ -138,16 +156,21 @@ fun PlayerList(
         //shows loading indicator if loading of next page is in progress
         item {
             if (state.isLoading) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                PlayerSearchItemLoading()
             }
         }
+    }
+}
+
+@Composable
+private fun PlayerSearchItemLoading() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        CircularProgressIndicator()
     }
 }
 
@@ -170,12 +193,13 @@ fun PlayerItem(
     ) {
 
         Row(
-            modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-
             Box(
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier
+                    .size(100.dp)
             ) {
 
                 // temporary solution - will be replaced by real images from real api
@@ -217,11 +241,11 @@ fun PlayerItem(
             }
 
             Column(
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
             ) {
 
                 with(player) {
-
 
                     Row {
 
@@ -246,8 +270,7 @@ fun PlayerItem(
 
                     Row {
 
-                        if (position!="" && position!=null)
-                        {
+                        if (position != "" && position != null) {
                             // Court icon
                             GlideImage(
                                 modifier = Modifier
@@ -333,21 +356,3 @@ fun PlayerItem(
         HorizontalDivider()
     }
 }
-
-
-//@Composable
-//fun ScreenNav(navController: NavController) {
-//    Column {
-//        Button(onClick = { navController.navigate(NavigationStrings.PLAYERSEARCH.toString()) }) {
-//            Text(text = "Naviguj na player search")
-//        }
-//
-//        Button(onClick = { navController.navigate(NavigationStrings.PLAYERDETAIL.toString() + "/123") }) {
-//            Text(text = "Naviguj na player detail")
-//        }
-//
-//        Button(onClick = { navController.navigate(NavigationStrings.TEAMDETAIL.toString() + "/123") }) {
-//            Text(text = "Naviguj na team detail")
-//        }
-//    }
-//}
