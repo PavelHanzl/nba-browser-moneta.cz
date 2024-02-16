@@ -77,7 +77,7 @@ fun PlayerDetailScreen(
             }
 
         } else {
-            PlayerDetailLoading()
+            DetailScreenLoading()
         }
 
     }
@@ -138,7 +138,8 @@ private fun PlayerDetailHeader(
 @Composable
 private fun PlayerDetailNameAndId(player: Player) {
     Row(
-        modifier = Modifier.padding(top = 24.dp)
+        modifier = Modifier
+            .padding(top = 24.dp)
     ) {
 
         // Player id
@@ -308,7 +309,7 @@ private fun PlayerDetailTeamInfo(navController: NavController, player: Player) {
                     .fillMaxWidth()
                     .padding(16.dp),
                 onClick = { navController.navigate("${NavigationStrings.TEAMDETAIL.toString()}/${player.team.id}") },
-                shape = RectangleShape,
+                shape = RectangleShape
             ) {
                 Text(text = "Detail of ${player.team.name} team")
 
@@ -318,9 +319,10 @@ private fun PlayerDetailTeamInfo(navController: NavController, player: Player) {
 }
 
 @Composable
-private fun PlayerDetailLoading() {
+fun DetailScreenLoading() {
     Box(
-        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }

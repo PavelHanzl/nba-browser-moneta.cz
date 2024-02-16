@@ -16,7 +16,7 @@ class TeamDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val teamRepository: TeamRepository
 ) :ViewModel() {
-    val nameOfScreen = "Team detail"
+
     var state by mutableStateOf(TeamDetailScreenState())
 
     init {
