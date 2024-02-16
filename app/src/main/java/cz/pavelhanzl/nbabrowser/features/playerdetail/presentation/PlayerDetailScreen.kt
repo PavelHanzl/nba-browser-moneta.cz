@@ -87,7 +87,7 @@ fun PlayerDetailScreen(
             }
 
         } else {
-            DetailScreenLoading()
+            ScreenLoading()
         }
 
     }
@@ -329,7 +329,7 @@ private fun PlayerDetailTeamInfo(navController: NavController, player: Player) {
 }
 
 @Composable
-fun DetailScreenLoading() {
+fun ScreenLoading() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

@@ -46,6 +46,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import cz.pavelhanzl.nbabrowser.R
 import cz.pavelhanzl.nbabrowser.features.playerdetail.model.Player
+import cz.pavelhanzl.nbabrowser.features.playerdetail.presentation.ScreenLoading
 import cz.pavelhanzl.nbabrowser.navigation.NavigationStrings
 import cz.pavelhanzl.nbabrowser.temp.images.PlayerPhotoThumbnails
 import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
@@ -98,6 +99,8 @@ fun PlayerSearchScreen(
                     state = state
                 )
             }
+        } else {
+            ScreenLoading()
         }
     }
 }

@@ -32,7 +32,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import cz.pavelhanzl.nbabrowser.R
-import cz.pavelhanzl.nbabrowser.features.playerdetail.presentation.DetailScreenLoading
+import cz.pavelhanzl.nbabrowser.features.playerdetail.presentation.ScreenLoading
 import cz.pavelhanzl.nbabrowser.features.playersearch.presentation.NbaTopAppBar
 import cz.pavelhanzl.nbabrowser.features.teamdetail.model.Team
 import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
@@ -94,7 +94,7 @@ fun TeamDetailScreen(
             }
 
         } else {
-            DetailScreenLoading()
+            ScreenLoading()
         }
 
     }
