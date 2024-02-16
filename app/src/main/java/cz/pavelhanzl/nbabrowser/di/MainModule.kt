@@ -18,6 +18,13 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Provides dependency injection configurations for the NBA Browser application.
+ *
+ * This module includes the setup of networking components like Retrofit and OkHttpClient,
+ * service interfaces for accessing the NBA API, and repositories for handling data operations.
+ * It also includes the setup of ViewModels for different features in the application.
+ */
 val appModule = module {
 
     // Creating an Interceptor to add an authorization header for https://docs.balldontlie.io/#authentication
@@ -80,7 +87,7 @@ val appModule = module {
         )
     }
 
-    viewModel {(savedStateHandle: SavedStateHandle) ->
+    viewModel { (savedStateHandle: SavedStateHandle) ->
         TeamDetailViewModel(
             savedStateHandle = savedStateHandle,
             teamRepository = get()

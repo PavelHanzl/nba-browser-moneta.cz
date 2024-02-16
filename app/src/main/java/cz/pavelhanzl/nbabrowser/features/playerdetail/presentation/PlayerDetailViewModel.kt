@@ -8,10 +8,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.pavelhanzl.nbabrowser.data.player.PlayerRepository
 import cz.pavelhanzl.nbabrowser.features.playerdetail.model.Player
-import cz.pavelhanzl.nbabrowser.features.teamdetail.model.Team
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 
+/**
+ * ViewModel for managing the UI state and business logic of the Player Detail screen.
+ *
+ * This ViewModel handles the loading of player details from a repository
+ * and maintains the state for the Player Detail screen.
+ *
+ * @param savedStateHandle Handle for saving and retrieving data with the ViewModel's state.
+ * @param playerRepository Repository for fetching player data.
+ */
 class PlayerDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val playerRepository: PlayerRepository
@@ -40,6 +47,11 @@ class PlayerDetailViewModel(
 
 }
 
+/**
+ * Represents the UI state for the Player Detail screen.
+ *
+ * @property player The [Player] object containing detailed information about the player.
+ */
 data class PlayerDetailScreenState(
     val player: Player? = null
-    )
+)

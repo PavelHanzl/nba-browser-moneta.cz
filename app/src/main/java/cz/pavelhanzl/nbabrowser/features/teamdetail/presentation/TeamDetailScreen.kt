@@ -38,6 +38,15 @@ import cz.pavelhanzl.nbabrowser.features.teamdetail.model.Team
 import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
 import org.koin.androidx.compose.koinViewModel
 
+/**
+ * Displays the team detail screen.
+ *
+ * This screen shows detailed information about a specific NBA team, including its logo, name, city,
+ * and division. A back button allows navigation back to the previous screen (player detail).
+ *
+ * @param navController NavController to manage navigation actions.
+ * @param viewModel ViewModel that holds the state and business logic for the team detail.
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -61,28 +70,28 @@ fun TeamDetailScreen(
 
         if (team != null) {
 
-                Column(
+            Column(
+                modifier = Modifier
+                    .padding(it)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                TeamDetailHeader(team)
+                TeamDetailTeamName(team)
+                TeamDetailTeamInfo(team)
+
+                Button(
                     modifier = Modifier
-                        .padding(it)
-                        .verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-                    TeamDetailHeader(team)
-                    TeamDetailTeamName(team)
-                    TeamDetailTeamInfo(team)
-
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        onClick = { navController.popBackStack() },
-                        shape = RectangleShape
-                    )
-                    {
-                        Text(text = stringResource(R.string.back_to_player_detail))
-                    }
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    onClick = { navController.popBackStack() },
+                    shape = RectangleShape
+                )
+                {
+                    Text(text = stringResource(R.string.back_to_player_detail))
                 }
+            }
 
         } else {
             DetailScreenLoading()

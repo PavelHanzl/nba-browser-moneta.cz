@@ -45,6 +45,14 @@ import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
 import cz.pavelhanzl.nbabrowser.utils.ktx.toFeetAndInches
 import org.koin.androidx.compose.koinViewModel
 
+/**
+ * Displays the detail screen for a selected NBA player.
+ *
+ * This screen shows detailed information about the player including their stats, team info, and image.
+ *
+ * @param navController NavController for managing app navigation.
+ * @param viewModel ViewModel that holds the state and business logic.
+ */
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -55,8 +63,9 @@ fun PlayerDetailScreen(
     val player = viewModel.state.player
 
     Scaffold(topBar = {
-        NbaTopAppBar(navController = navController,
-            icon = R.drawable.icon_back ,
+        NbaTopAppBar(
+            navController = navController,
+            icon = R.drawable.icon_back,
             title = R.string.player_detail_title
         )
     }) {

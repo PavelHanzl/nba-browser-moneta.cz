@@ -6,14 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import cz.pavelhanzl.nbabrowser.navigation.AppNavHost
 import cz.pavelhanzl.nbabrowser.ui.theme.NBABrowserTheme
 
+/**
+ * Main activity for the NBA Browser app.
+ *
+ * This activity sets the content view for the application using Jetpack Compose. It initializes the theme
+ * and sets up the navigation host, which is the entry point for the navigation graph of the app.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

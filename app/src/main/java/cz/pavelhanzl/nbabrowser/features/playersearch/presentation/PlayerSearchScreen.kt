@@ -52,6 +52,15 @@ import cz.pavelhanzl.nbabrowser.temp.images.TeamLogo
 import cz.pavelhanzl.nbabrowser.utils.ktx.toFeetAndInches
 import org.koin.androidx.compose.koinViewModel
 
+/**
+ * Displays the player list screen.
+ *
+ * This screen presents a list of all NBA players fetched form api. It includes a top app bar and a list
+ * of player items, each of which can be clicked to navigate to the player detail screen.
+ *
+ * @param navController NavController to handle navigation actions.
+ * @param viewModel ViewModel that provides the state for UI and pagination.
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun PlayerSearchScreen(

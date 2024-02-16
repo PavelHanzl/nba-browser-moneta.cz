@@ -10,6 +10,14 @@ import cz.pavelhanzl.nbabrowser.data.player.PlayerRepository
 import cz.pavelhanzl.nbabrowser.features.playerdetail.model.Player
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for managing the UI state and business logic of the Player Search screen.
+ *
+ * This ViewModel uses a paginator to handle the loading and displaying of player search results,
+ * and maintains the state related to player list.
+ *
+ * @property playerRepository Repository for fetching player data.
+ */
 class PlayerSearchViewModel(
     private val playerRepository: PlayerRepository,
 ) : ViewModel() {
@@ -25,10 +33,10 @@ class PlayerSearchViewModel(
             state = state.copy(isLoading = it)
         },
         onRequest = { startIndex ->
-            playerRepository.getAllPlayersByPage( startIndex, state.perPage)
+            playerRepository.getAllPlayersByPage(startIndex, state.perPage)
         },
         getNextCursor = { currentIndex, maxResults ->
-            currentIndex+maxResults
+            currentIndex + maxResults
         },
         onError = {
             state = state.copy(error = it?.localizedMessage)
@@ -57,7 +65,17 @@ class PlayerSearchViewModel(
 
 }
 
-
+/**
+ * Represents the UI state for the Player Search screen.
+ *
+ * @property isLoading Indicates if the data is currently being loaded.
+ * @property items The current list of loaded [Player] items.
+ * @property error The error message if an error occurs during data loading.
+ * @property endReached Indicates if the end of the data set has been reached.
+ * @property nextCursor The cursor for the next set of results.
+ * @property perPage The number of items per page in the search results.
+ * @property resultExpected Indicates if search results are expected.
+ */
 data class PlayerSearchScreenState(
     val isLoading: Boolean = false,
     val items: List<Player> = emptyList(),
