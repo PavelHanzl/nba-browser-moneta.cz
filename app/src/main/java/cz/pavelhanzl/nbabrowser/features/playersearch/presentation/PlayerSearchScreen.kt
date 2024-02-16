@@ -1,7 +1,5 @@
 package cz.pavelhanzl.nbabrowser.features.playersearch.presentation
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,20 +12,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -37,7 +32,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -59,48 +53,24 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun PlayerSearchScreen(
-    navController: NavController,
-    viewModel: PlayerSearchViewModel = koinViewModel()
+    navController: NavController, viewModel: PlayerSearchViewModel = koinViewModel()
 ) {
     val state = viewModel.state
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
-                title = {
-
-                    Row {
-                        // Ball icon
-                        GlideImage(
-                            modifier = Modifier
-                                .size(30.dp)
-                                .align(Alignment.CenterVertically),
-                            model = R.drawable.icon_basketball_ball,
-                            contentDescription = "Ball icon",
-                            contentScale = ContentScale.Fit,
-                            transition = CrossFade
-                        )
-
-                        Text(
-                            modifier = Modifier
-                                .padding(
-                                    start = 8.dp
-                                )
-                                .align(Alignment.CenterVertically),
-                            text = "NBA Players",
-                            fontWeight = FontWeight.ExtraBold
-
-                        )
-                    }
-
-                },
-                scrollBehavior = scrollBehavior
+            NbaTopAppBar(
+                navController = navController,
+                scrollBehavior = scrollBehavior,
+                icon = { R.drawable.icon_basketball_ball },
+                title = { "NBA Players" },
+                backButtonEnabled = { false }
             )
-        }
-    ) {
+
+        }) {
         if (state.items.isNotEmpty()) {
             Column(modifier = Modifier.padding(it)) {
                 Spacer(modifier = Modifier.height(10.dp))
@@ -108,6 +78,44 @@ fun PlayerSearchScreen(
             }
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+fun NbaTopAppBar(
+    navController: NavController,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+    icon: () -> Int,
+    title: () -> String,
+    backButtonEnabled: () -> Boolean = { true }
+) {
+    TopAppBar(
+
+        navigationIcon = {
+
+            IconButton(
+                onClick = {navController.navigateUp()},
+                enabled = backButtonEnabled()
+            ) {
+                // Ball icon
+                GlideImage(
+                    modifier = Modifier.size(30.dp),
+                    model = icon(),
+                    contentDescription = "Ball icon",
+                    contentScale = ContentScale.Fit,
+                    transition = CrossFade
+                )
+            }
+        },
+
+        title = {
+            Text(
+                text = title(),
+                fontWeight = FontWeight.ExtraBold
+            )
+        },
+        scrollBehavior = scrollBehavior
+    )
 }
 
 @Composable
@@ -125,10 +133,9 @@ fun PlayerList(
         verticalArrangement = Arrangement.Top
     ) {
         items(state.items.size) { i ->
-            PlayerItem(state.items[i],
-                onClick = {
-                    navController.navigate("${NavigationStrings.PLAYERDETAIL}/${state.items[i].id}")
-                })
+            PlayerItem(state.items[i], onClick = {
+                navController.navigate("${NavigationStrings.PLAYERDETAIL}/${state.items[i].id}")
+            })
 
             //loads next page of players
             if (i >= state.items.size - 1 && !state.endReached && !state.isLoading) {
@@ -140,8 +147,7 @@ fun PlayerList(
         item {
             if (state.isLoading) {
                 Row(
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.Center
@@ -156,8 +162,7 @@ fun PlayerList(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PlayerItem(
-    player: Player,
-    onClick: () -> Unit
+    player: Player, onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -173,19 +178,16 @@ fun PlayerItem(
     ) {
 
         Row(
-            modifier = Modifier
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically
         ) {
 
 
             Box(
-                modifier = Modifier
-                    .size(100.dp)
+                modifier = Modifier.size(100.dp)
             ) {
 
                 // temporary solution - will be replaced by real images from real api
-                val randomPlayerImage = remember{ PlayerPhoto.entries.toTypedArray().random().url}
+                val randomPlayerImage = remember { PlayerPhoto.entries.toTypedArray().random().url }
 
                 // Player image preview
                 GlideImage(
@@ -222,8 +224,7 @@ fun PlayerItem(
             }
 
             Column(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp)
+                modifier = Modifier.padding(horizontal = 10.dp)
             ) {
 
 
@@ -238,8 +239,7 @@ fun PlayerItem(
                     )
                     // Player name
                     Text(
-                        modifier = Modifier
-                            .padding(start = 6.dp),
+                        modifier = Modifier.padding(start = 6.dp),
                         text = "${player.first_name ?: ""} ${player.last_name ?: ""} " ?: "",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
@@ -320,7 +320,7 @@ fun PlayerItem(
                         fontStyle = FontStyle.Italic,
                         maxLines = 1,
 
-                    )
+                        )
                 }
 
 
