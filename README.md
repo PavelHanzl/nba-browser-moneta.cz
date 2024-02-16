@@ -25,9 +25,9 @@ Pro získání informací o hráčích je vhodné použít https://balldontlie.i
 - **Detaily Týmů**: Informace o NBA týmech s logy a dalšími doplňujícími údaji.
 
 <div >  
-<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_1.jpg" align="left" height="500">
-<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_2.jpg" align="left" height="500">
-<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_3.jpg" align="left" height="500">
+<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_1.jpg"  style="margin-right: 5px; border: 1px solid #adadad;" align="left" height="500">
+<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_2.jpg"  style="margin-right: 5px; border: 1px solid #adadad;" align="left" height="500">
+<img src="https://raw.githubusercontent.com/PavelHanzl/nba-browser-moneta.cz/master/AppScreenShots/Screenshot_3.jpg"  style="border: 1px solid #adadad;" align="left" height="500">
 </div>
 
 <br clear="left">
