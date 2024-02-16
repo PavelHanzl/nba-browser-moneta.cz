@@ -45,7 +45,7 @@ V projektu NBA Browser bylo rozhodnuto nepoužívat reálné obrázky hráčů a
 
 Alternativní řešení popisované např. zde ( https://medium.com/@avinash.sarguru/getting-nba-player-pictures-for-you-application-6106d5530943 ) již nebylo možné realizovat, jelikož v článku zmiňovaný endpoint již není veřejně dostupný, což mi znemožnilo jeho implementaci.
 
-Jako dočasné řešení byly implementovány enum třídy s pevně danými URL obrázků, aby byl naplněn požadavek na využití Glide knihovny pro načítání obrázků. Toto řešení je možné v budoucnu nahradit připojením k placenému API, které by poskytovalo požadované obrázky.
+Jako dočasné řešení byly implementovány enum třídy s pevně danými URL obrázků (náhodné načtení ze seznamu poskytnutých url při vykreslení obrázku), aby byl naplněn požadavek na využití Glide knihovny pro načítání obrázků. Toto řešení je možné v budoucnu nahradit připojením k placenému API, které by poskytovalo požadované obrázky.
 
 
 ---
